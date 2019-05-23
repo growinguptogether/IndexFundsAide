@@ -1,0 +1,25 @@
+{
+  "name": "indexfundsaide",
+  "version": "1.0.0",
+  "description": "本项目主要用途用于帮助指数基金的投资，适用于宽指数基金。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/growinguptogether/IndexFundsAide.git"
+  },
+  "keywords": [
+    "indexfunds"
+  ],
+  "author": "ZhongXiewei",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/growinguptogether/IndexFundsAide/issues"
+  },
+  "homepage": "https://github.com/growinguptogether/IndexFundsAide#readme",
+  "dependencies": {
+    "request": "^2.88.0"
+  }
+}
