@@ -85,27 +85,52 @@ var broadBasedMarketIndex = [
 ];
 
 function FundGetter() {
-  this.getAllIndexFunds = function() {
+
+  this.cookie = [];
+
+  this.getCookie = () => {
     return new Promise((resolve, reject) => {
-      request.get(`http://fund.eastmoney.com/data/rankhandler.aspx?op=ph&dt=kf&ft=zs&rs=&gs=0&sc=zzf&st=desc
-              &sd=2018-05-19&ed=2019-05-19&qdii=|&tabSubtype=,,,,,&pi=1&pn=1000&dx=1&v=0.005844696750874734`,
+      request.get(`http://www.iwencai.com`,
         (err, httpResponse, body) => {
           if (err) reject(err);
-          else resolve(body);
+          else {
+            this.cookie = httpResponse.headers["set-cookie"];
+            resolve();
+          }
         });
-    }).then(body => {
-      var rankData = eval(`${body}rankData`);
-      return Promise.resolve(rankData.datas);
+    })
+  }
+
+
+  this.getAllIndexFunds = () => {
+    return new Promise((resolve, reject) => {
+      request({
+        url: `http://www.iwencai.com/stockpick/cache?token=04effc62a7d4a5a95b1056c7bd00e8a1&p=1&perpage=1500&sort={%22column%22:7,%22order%22:%22ASC%22}
+              &showType=[%22%22,%22%22,%22%22,%22%22,%22%22,%22onTable%22,%22onTable%22,%22onTable%22,%22onTable%22,%22onTable%22,%22onTable%22,%22onTable%22,%22onTable%22,%22%22]`,
+        headers: {
+          'Cookie': `v=AqpCHez4go8UsQ7jIANyNt5b-xtPGy9JIJ2iGjRjVYWI9kSNHKt-hfAv8iAH`
+        }
+      },
+        (err, httpResponse, body) => {
+          if (err) reject(err);
+          else
+            resolve(body);
+        });
     });
   }
 
   // 爬取对应指数的市盈率
   // TODO: 浏览器访问能够得到结果，而通过request无法得到想要的结果
-  this.getBroadBasedMarketIndexByName = function(indexName) {
+  this.getBroadBasedMarketIndexByName = (indexName) => {
     return new Promise((resolve, reject) => {
       var url = 'http://www.iwencai.com/stockpick/search?typed=0&preParams=&ts=1&f=1&qs=result_original&selfsectsn=&querytype=stock&searchfilter=&tid=stockpick&w=' + indexName + '市盈率';
       url = encodeURI(url);
-      request(url, 
+      request({
+        url,
+        headers: {
+          'Cookie': `v=AqpCHez4go8UsQ7jIANyNt5b-xtPGy9JIJ2iGjRjVYWI9kSNHKt-hfAv8iAH`
+        }
+      },
         (err, httpResponse, body) => {
           if (err) reject(err);
           else {

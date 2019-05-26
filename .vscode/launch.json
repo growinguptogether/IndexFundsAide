@@ -5,10 +5,16 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Program",
+            "program": "${workspaceFolder}/index.js"
+        },
+        {
             "name": "Current TS File",
             "type": "node",
             "request": "launch",
-            "cwd": "${workspaceFolder}/services/fundGetter",
+            "cwd": "${workspaceFolder}",
             "args": [
                 "-r",
                 "ts-node/register",
